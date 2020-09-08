@@ -15,10 +15,10 @@ const App = () => {
             <Route exact path="/">
               <Intro />
             </Route>
-            <Route path="/:owner/:name">
+            <Route exact path="/:owner/:name">
               <Browser />
             </Route>
-            <Route path="/:owner/:name/issue/:id">
+            <Route path="/:owner/:name/:id">
               <Issue />
             </Route>
           </Switch>

@@ -8,7 +8,7 @@ import {
   Box,
 } from "@primer/components";
 import { SearchIcon } from "@primer/octicons-react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
 import { GET_REPO_ISSUES } from "../queries";
@@ -55,9 +55,11 @@ const Browser = () => {
 
         return (
           <Box>
-            <Avatar src={node.author.avatarUrl} />
-            <Text>{node.author.login}</Text>
-            <Text>{node.title}</Text>
+            <Link to={`/${owner}/${name}/${node.number}`}>
+              <Avatar src={node.author.avatarUrl} />
+              <Text>{node.author.login}</Text>
+              <Text>{node.title}</Text>
+            </Link>
           </Box>
         );
       })}
