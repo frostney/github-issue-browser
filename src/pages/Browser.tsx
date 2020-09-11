@@ -6,6 +6,10 @@ import {
   Avatar,
   Text,
   Box,
+  Pagehead,
+  Breadcrumb,
+  Heading,
+  BorderBox
 } from "@primer/components";
 import { SearchIcon } from "@primer/octicons-react";
 import { useParams, Link } from "react-router-dom";
@@ -33,6 +37,15 @@ const Browser = () => {
 
   return (
     <>
+    <Pagehead>
+        <Breadcrumb>
+          <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+          <Breadcrumb.Item
+            href={`/${owner}/${name}`} selected
+          >{`${owner}/${name}`}</Breadcrumb.Item>
+        </Breadcrumb>
+        <Heading fontSize={2}>Issues</Heading>
+      </Pagehead>
       <FilteredSearch>
         <Dropdown>
           <Dropdown.Button>Filter</Dropdown.Button>
@@ -44,6 +57,7 @@ const Browser = () => {
         </Dropdown>
         <TextInput icon={SearchIcon} />
       </FilteredSearch>
+      <BorderBox padding={2} margin={2}>
       {data?.repository?.issues?.nodes?.map((node: any) => {
         console.log(node);
 
@@ -57,6 +71,7 @@ const Browser = () => {
           </Box>
         );
       })}
+      </BorderBox>
     </>
   );
 };

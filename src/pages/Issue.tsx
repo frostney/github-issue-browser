@@ -46,7 +46,7 @@ const Issue = () => {
         </Breadcrumb>
         <Heading fontSize={2}>{data.repository.issue.title}</Heading>
       </Pagehead>
-      <BorderBox>
+      <BorderBox padding={2} margin={2}>
         <Avatar src={data.repository.issue.author.avatarUrl} />
         <Text fontWeight="bold">{data.repository.issue.author.login}</Text>
         <Text
