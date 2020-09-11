@@ -12,18 +12,14 @@ import {
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { GET_ISSUE } from "../queries";
-
-interface RouteParams {
-  owner: string;
-  name: string;
-  id: string;
-}
+import { IssueRouteParams } from "../types";
+import { getIssue } from "../queries";
+import { Comment } from "../components";
 
 const Issue = () => {
-  const { owner, name, id } = useParams<RouteParams>();
+  const { owner, name, id } = useParams<IssueRouteParams>();
 
-  const { data, loading, error } = useQuery(GET_ISSUE, {
+  const { data, loading, error } = useQuery(getIssue, {
     variables: {
       name,
       owner,
@@ -42,11 +38,11 @@ const Issue = () => {
     <>
       <Pagehead>
         <Breadcrumb>
-          <Breadcrumb.Item href="#business">Home</Breadcrumb.Item>
-          <Breadcrumb.Item href="#customers">{`${owner}/${name}`}</Breadcrumb.Item>
-          <Breadcrumb.Item href="#mailchimp" selected>
-            {`#${id}`}
-          </Breadcrumb.Item>
+          <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+          <Breadcrumb.Item
+            href={`/${owner}/${name}`}
+          >{`${owner}/${name}`}</Breadcrumb.Item>
+          <Breadcrumb.Item selected>{`#${id}`}</Breadcrumb.Item>
         </Breadcrumb>
         <Heading fontSize={2}>{data.repository.issue.title}</Heading>
       </Pagehead>
@@ -60,15 +56,11 @@ const Issue = () => {
       <Timeline>
         {data.repository.issue.comments.nodes.map((node: any) => {
           return (
-            <Timeline.Item>
-              <Timeline.Badge>
-                <Avatar src={node.author.avatarUrl} />
-              </Timeline.Badge>
-              <Timeline.Body>
-                <Text fontWeight="bold">{node.author.login}</Text>
-                <Text dangerouslySetInnerHTML={{ __html: node.bodyHTML }} />
-              </Timeline.Body>
-            </Timeline.Item>
+            <Comment
+              avatar={node.author.avatarUrl}
+              login={node.author.login}
+              body={node.bodyHTML}
+            />
           );
         })}
       </Timeline>

@@ -11,19 +11,13 @@ import { SearchIcon } from "@primer/octicons-react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { GET_REPO_ISSUES } from "../queries";
-
-interface RouteParams {
-  owner: string;
-  name: string;
-}
+import { getRepositoryIssues } from "../queries";
+import { RepositoryRouteParams } from "../types";
 
 const Browser = () => {
-  const { owner, name } = useParams<RouteParams>();
+  const { owner, name } = useParams<RepositoryRouteParams>();
 
-  console.log(owner, name);
-
-  const { data, loading, error } = useQuery(GET_REPO_ISSUES, {
+  const { data, loading, error } = useQuery(getRepositoryIssues, {
     variables: {
       name,
       owner,
